@@ -1,0 +1,11 @@
+[module/pulseaudio_control]
+type = custom/script
+tail = true
+label-padding = 2
+
+exec = pulseaudio-control --icons-volume " , " --icon-muted " " --format '$VOL_ICON ${VOL_LEVEL}%' listen
+click-right = exec pavucontrol &
+click-left = pulseaudio-control togmute
+click-middle = pulseaudio-control --sink-blacklist "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2" next-sink
+scroll-up = pulseaudio-control --volume-max 130 up
+scroll-down = pulseaudio-control --volume-max 130 down

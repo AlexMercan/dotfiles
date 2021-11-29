@@ -1,0 +1,10 @@
+[bar/mainBar]
+modules-left = i3_workspaces
+modules-right = pulseaudio_control date_time
+font-0 = CaskaydiaCove Nerd Font:style=Regular
+background=#222b2e
+tray-position=right
+tray-padding=2
+wm-restack=i3
+
+include-directory=~/.config/polybar/modules

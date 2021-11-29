@@ -1,0 +1,13 @@
+[module/date_time]
+type = internal/date
+
+; Seconds to sleep between updates
+; Default: 1.0
+interval = 1.0
+
+; Optional time format
+time = %H:%M
+
+label = %time%
+
+format=<label>

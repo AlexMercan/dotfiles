@@ -1,0 +1,20 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- clean: ['~']
+
+- link:
+    ~/.bash_profile: bash_profile
+    ~/.bashrc: bashrc
+    ~/.bash_logout: bash_logout
+    ~/.gitconfig: gitconfig
+    ~/.config/rofi: rofi
+    ~/.config/nvim: nvim
+    ~/.config/kitty: kitty
+    ~/.config/ladspa_dsp: ladspa_dsp
+    ~/.config/polybar: polybar
+    ~/.config/i3: i3
+
