@@ -17,4 +17,5 @@
     ~/.config/ladspa_dsp: ladspa_dsp
     ~/.config/polybar: polybar
     ~/.config/i3: i3
+    ~/.config/pulse/default.pa: pulse/default.pa
 
