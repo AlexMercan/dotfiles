@@ -54,14 +54,14 @@ Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 Plug 'ThePrimeagen/harpoon'
 
 Plug 'vlime/vlime', {'rtp': 'vim/'}
-
+Plug 'catppuccin/nvim'
 
 call plug#end()
 
-colorscheme gruvbox
+colorscheme catppuccin
 
 let g:lightline = {
-        \ 'colorscheme': 'gruvbox',
+            \ 'colorscheme': 'catppuccin',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
