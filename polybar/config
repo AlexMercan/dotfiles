@@ -1,4 +1,5 @@
 [bar/mainBar]
+monitor = ${env:MONITOR:}
 modules-left = i3_workspaces
 modules-right = pulseaudio_control date_time
 font-0 = CaskaydiaCove Nerd Font:style=Regular
