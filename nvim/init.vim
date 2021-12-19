@@ -80,7 +80,8 @@ let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
 
 let mapleader = " "
-let g:coq_settings = { 'auto_start': v:true }
+
+let g:coq_settings = {'auto_start': v:true, 'match.max_results':10, 'clients.lsp.weight_adjust' : 1.3}
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
@@ -93,14 +94,14 @@ require'nvim-treesitter.configs'.setup {
 
 require('telescope').setup{
     defaults = {
-       file_ignore_patterns  = {"%.class",".git/.*","bin/.*", "%.jar", "%.bin"}
+       file_ignore_patterns  = {"%.class",".git/.*","bin/.*", "%.jar", "%.bin", "%.fxml", "%.xml"}
     }
 }
 
 local nvim_lsp = require('lspconfig')
 local coq = require "coq"
 
-local servers = { 'pyright', 'jdtls', 'gopls', 'clangd'}
+local servers = { 'pyright', 'jdtls', 'gopls', 'clangd', 'csharp_ls'}
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {coq.lsp_ensure_capabilities{
     on_attach = on_attach,
@@ -118,6 +119,7 @@ lsp_installer.on_server_ready(function(server)
     server:setup(opts)
     vim.cmd [[ do User LspAttachBuffers ]]
 end)
+
 nvim_lsp.jdtls.setup {coq.lsp_ensure_capabilities
             {
                 on_attach = custom_attach,
