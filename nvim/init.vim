@@ -40,7 +40,7 @@ Plug 'lighthaus-theme/vim-lighthaus'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
@@ -94,28 +94,26 @@ require'nvim-treesitter.configs'.setup {
 
 require('telescope').setup{
     defaults = {
-       file_ignore_patterns  = {"%.class",".git/.*","bin/.*", "%.jar", "%.bin", "%.fxml", "%.xml"}
+       file_ignore_patterns  = {"%.class",".git/.*","bin/.*","node_modules/.*", "%.jar", "%.bin", "%.fxml", "%.xml"}
     }
 }
 
 local nvim_lsp = require('lspconfig')
 local coq = require "coq"
 
-local servers = { 'pyright', 'jdtls', 'gopls', 'clangd', 'csharp_ls'}
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {coq.lsp_ensure_capabilities{
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
-}
-}
-end
-
 local lsp_installer = require("nvim-lsp-installer")
 
 lsp_installer.on_server_ready(function(server)
-    local opts = {}
+    local opts = {
+            coq.lsp_ensure_capabilities
+            {
+                on_attach = custom_attach,
+                flags = {
+                  debounce_text_changes = 150,
+                },
+                root_dir=vim.loop.cwd
+            }
+    }
     server:setup(opts)
     vim.cmd [[ do User LspAttachBuffers ]]
 end)
@@ -128,7 +126,6 @@ nvim_lsp.jdtls.setup {coq.lsp_ensure_capabilities
                 },
                 root_dir=vim.loop.cwd}
             }
-
 EOF
 
 nnoremap gD <cmd>lua vim.lsp.buf.declaration()<CR>zz
