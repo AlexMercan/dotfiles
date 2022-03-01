@@ -53,8 +53,9 @@ Plug 'ms-jpq/coq.thirdparty', {'branch': '3p'}
 
 Plug 'ThePrimeagen/harpoon'
 
-Plug 'vlime/vlime', {'rtp': 'vim/'}
 Plug 'catppuccin/nvim'
+
+Plug 'jiangmiao/auto-pairs'
 
 call plug#end()
 
@@ -81,6 +82,9 @@ let g:NERDTreePatternMatchHighlightFullName = 1
 
 let mapleader = " "
 
+
+let g:AutoPairsMapCh = 0
+
 let g:coq_settings = {'auto_start': v:true, 'match.max_results':10, 'clients.lsp.weight_adjust' : 1.3}
 
 lua <<EOF
@@ -94,7 +98,7 @@ require'nvim-treesitter.configs'.setup {
 
 require('telescope').setup{
     defaults = {
-       file_ignore_patterns  = {"%.class",".git/.*","bin/.*","node_modules/.*", "%.jar", "%.bin", "%.fxml", "%.xml"}
+       file_ignore_patterns  = {"%.class",".git/.*","/usr/.*","bin/.*","node_modules/.*", "%.jar", "%.bin", "%.fxml", "%.xml"}
     }
 }
 
@@ -126,7 +130,58 @@ nvim_lsp.jdtls.setup {coq.lsp_ensure_capabilities
                 },
                 root_dir=vim.loop.cwd}
             }
+
 EOF
+
+"Quickfix list and locallist
+let g:the_primeagen_qf_l = 0
+let g:the_primeagen_qf_g = 0
+
+fun! ToggleQFList(global)
+    if a:global
+        if g:the_primeagen_qf_g == 1
+            cclose
+        else
+            copen
+        end
+    else
+        echo 'toggle locallist'
+        if g:the_primeagen_qf_l == 1
+            lclose
+        else
+            lopen
+        end
+    endif
+endfun
+
+fun! SetQFControlVariable()
+    if getwininfo(win_getid())[0]['loclist'] == 1
+        let g:the_primeagen_qf_l = 1
+    else
+        let g:the_primeagen_qf_g = 1
+    end
+endfun
+
+fun! UnsetQFControlVariable()
+    if getwininfo(win_getid())[0]['loclist'] == 1
+        let g:the_primeagen_qf_l = 0
+    else
+        let g:the_primeagen_qf_g = 0
+    end
+endfun
+
+augroup locallist
+    autocmd!
+    " Populate locallist with lsp diagnostics automatically 
+    autocmd! BufWrite, BufEnter, InsertLeave * :lua vim.lsp.diagnostic.set_loclist({open_loclist = false})
+augroup END
+
+augroup fixlist
+    autocmd!
+    autocmd BufWinEnter quickfix call SetQFControlVariable()
+    autocmd BufCreate quickfix call SetQFControlVariable()
+    autocmd BufWinLeave * call UnsetQFControlVariable()
+augroup END
 
 nnoremap gD <cmd>lua vim.lsp.buf.declaration()<CR>zz
 nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>zz
@@ -143,7 +198,10 @@ nnoremap <leader>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
 nnoremap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_ivy())<cr>
-nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <C-g> <cmd>lua require('telescope.builtin').git_files(require('telescope.themes').get_ivy())<cr>
+nnoremap <C-b>w <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols(require('telescope.themes').get_ivy())<cr>
+nnoremap <C-b>d <cmd>lua require('telescope.builtin').lsp_document_symbols(require('telescope.themes').get_ivy())<cr>
+nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_ivy())<cr>
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -154,9 +212,13 @@ else
   set signcolumn=yes
 endif
 
+" Quickfix list stuff
+nnoremap <C-q> <cmd>call ToggleQFList(1)<CR>
+nnoremap ]a <cmd>cnext<CR>
+nnoremap [a <cmd>cprev<CR>
 
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
-" nnoremap <C-p> :GFiles<CR>
+
 nnoremap ; :
 
 " NERDTree
@@ -164,7 +226,7 @@ nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
 "nnoremap <C-f> :NERDTreeFind<CR>
 
-"Harpoon navigation
+" Harpoon navigation
 nnoremap tj :lua require("harpoon.ui").nav_file(1)<CR>
 nnoremap tk :lua require("harpoon.ui").nav_file(2)<CR>
 nnoremap tl :lua require("harpoon.ui").nav_file(3)<CR>
@@ -175,6 +237,10 @@ nnoremap <C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>
 
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
+
+" Keep highlight after indent
+vnoremap < <gv
+vnoremap > >gv
 
 " Using ALT+{h, j, k, l} to navigate windows from any mode
 tnoremap <A-h> <C-\><C-N><C-w>h
@@ -189,4 +255,3 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
-
