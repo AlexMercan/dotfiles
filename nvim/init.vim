@@ -20,6 +20,9 @@ set noerrorbells
 set scrolloff=8   
 set incsearch
 
+set splitright
+set splitbelow
+
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 
@@ -55,7 +58,9 @@ Plug 'ThePrimeagen/harpoon'
 
 Plug 'catppuccin/nvim'
 
-Plug 'jiangmiao/auto-pairs'
+Plug 'windwp/nvim-autopairs'
+
+Plug 'ggandor/lightspeed.nvim'
 
 call plug#end()
 
@@ -98,7 +103,7 @@ require'nvim-treesitter.configs'.setup {
 
 require('telescope').setup{
     defaults = {
-       file_ignore_patterns  = {"%.class",".git/.*","/usr/.*","bin/.*","node_modules/.*", "%.jar", "%.bin", "%.fxml", "%.xml"}
+       file_ignore_patterns  = {"%.class",".git/.*","/usr/.*","bin/.*","node_modules/.*", "%.jar", "%.bin", "%.fxml", "%.xml", "obj/"}
     }
 }
 
@@ -131,6 +136,43 @@ nvim_lsp.jdtls.setup {coq.lsp_ensure_capabilities
                 root_dir=vim.loop.cwd}
             }
 
+local remap = vim.api.nvim_set_keymap
+local npairs = require('nvim-autopairs')
+
+npairs.setup({ map_bs = false, map_cr = false })
+
+vim.g.coq_settings = { keymap = { recommended = false } }
+
+-- these mappings are coq recommended mappings unrelated to nvim-autopairs
+remap('i', '<esc>', [[pumvisible() ? "<c-e><esc>" : "<esc>"]], { expr = true, noremap = true })
+remap('i', '<c-c>', [[pumvisible() ? "<c-e><c-c>" : "<c-c>"]], { expr = true, noremap = true })
+remap('i', '<tab>', [[pumvisible() ? "<c-n>" : "<tab>"]], { expr = true, noremap = true })
+remap('i', '<s-tab>', [[pumvisible() ? "<c-p>" : "<bs>"]], { expr = true, noremap = true })
+
+-- skip it, if you use another global object
+_G.MUtils= {}
+
+MUtils.CR = function()
+  if vim.fn.pumvisible() ~= 0 then
+    if vim.fn.complete_info({ 'selected' }).selected ~= -1 then
+      return npairs.esc('<c-y>')
+    else
+      return npairs.esc('<c-e>') .. npairs.autopairs_cr()
+    end
+  else
+    return npairs.autopairs_cr()
+  end
+end
+remap('i', '<cr>', 'v:lua.MUtils.CR()', { expr = true, noremap = true })
+
+MUtils.BS = function()
+  if vim.fn.pumvisible() ~= 0 and vim.fn.complete_info({ 'mode' }).mode == 'eval' then
+    return npairs.esc('<c-e>') .. npairs.autopairs_bs()
+  else
+    return npairs.autopairs_bs()
+  end
+end
+remap('i', '<bs>', 'v:lua.MUtils.BS()', { expr = true, noremap = true })
 EOF
 
 "Quickfix list and locallist
@@ -183,24 +225,27 @@ augroup fixlist
     autocmd BufWinLeave * call UnsetQFControlVariable()
 augroup END
 
-nnoremap gD <cmd>lua vim.lsp.buf.declaration()<CR>zz
-nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>zz
-nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <leader>e <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
-nnoremap [d <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap ]d <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <leader>q <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
-nnoremap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>zz
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>zz
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <leader>ca <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <leader>e <cmd>lua vim.diagnostic.open_float()<CR>
+nnoremap <silent> [d <cmd>lua vim.diagnostic.goto_prev()<CR>zz
+nnoremap <silent> ]d <cmd>lua vim.diagnostic.goto_next()<CR>zz
+nnoremap <silent> <leader>q <cmd>lua vim.diagnostic.setloclist()<CR>
+nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
 
+" Telescope pickers
 nnoremap <C-p> <cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_ivy())<cr>
 nnoremap <C-g> <cmd>lua require('telescope.builtin').git_files(require('telescope.themes').get_ivy())<cr>
+
 nnoremap <C-b>w <cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols(require('telescope.themes').get_ivy())<cr>
 nnoremap <C-b>d <cmd>lua require('telescope.builtin').lsp_document_symbols(require('telescope.themes').get_ivy())<cr>
+
 nnoremap <C-f> <cmd>lua require('telescope.builtin').live_grep(require('telescope.themes').get_ivy())<cr>
 
 " Always show the signcolumn, otherwise it would shift the text each time
@@ -214,8 +259,8 @@ endif
 
 " Quickfix list stuff
 nnoremap <C-q> <cmd>call ToggleQFList(1)<CR>
-nnoremap ]a <cmd>cnext<CR>
-nnoremap [a <cmd>cprev<CR>
+nnoremap ]a <cmd>cnext<CR>zz
+nnoremap [a <cmd>cprev<CR>zz
 
 nnoremap <leader><CR> :so ~/.config/nvim/init.vim<CR>
 
