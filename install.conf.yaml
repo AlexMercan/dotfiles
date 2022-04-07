@@ -18,4 +18,5 @@
     ~/.config/polybar: polybar
     ~/.config/i3: i3
     ~/.config/pulse/default.pa: pulse/default.pa
+    ~/.zshrc: zshrc
 
