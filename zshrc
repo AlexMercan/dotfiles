@@ -65,15 +65,22 @@ zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+#
 plugins=(
+    zsh-nvm
+    npm
+    docker
+    docker-compose
     git
     fzf
-
     )
 
 source $ZSH/oh-my-zsh.sh
@@ -104,6 +111,11 @@ export JDTLS_HOME="$HOME/.local/share/nvim/lsp_servers/jdtls/config_linux"
 export JDTLS_CONFIG="$HOME/.local/share/nvim/lsp_servers/jdtls/config_linux"
 export GRADLE_HOME=/usr/share/java/gradle
 export TERMINAL=/usr/bin/kitty
+
+
+# nvm
+#export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
