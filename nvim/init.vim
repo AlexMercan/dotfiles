@@ -61,6 +61,7 @@ Plug 'catppuccin/nvim'
 Plug 'windwp/nvim-autopairs'
 
 Plug 'ggandor/lightspeed.nvim'
+Plug 'windwp/nvim-ts-autotag'
 
 call plug#end()
 
@@ -101,9 +102,15 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+require'nvim-treesitter.configs'.setup {
+  autotag = {
+    enable = true,
+  }
+}
+
 require('telescope').setup{
     defaults = {
-       file_ignore_patterns  = {"%.class",".git/.*","/usr/.*","bin/.*","node_modules/.*", "%.jar", "%.bin", "%.fxml", "%.xml", "obj/"}
+       file_ignore_patterns  = {"mod/", "%.class",".git/.*","/usr/.*","bin/.*","node_modules/.*", "%.jar", "%.bin", "%.fxml", "%.xml", "obj/"}
     }
 }
 

@@ -3,3 +3,5 @@
 	name = Alexandru Mercan
 [credential]
 	helper = store
+[http]
+	postBuffer = 2097152000
