@@ -120,10 +120,11 @@ wk.register({
 		w = { "<cmd>lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>", "Workspace symbols" },
 		d = { "<cmd>lua require('telescope.builtin').lsp_dynamic_document_symbols()<cr>", "Document symbols" },
 	},
-	["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature" },
+	["<C-k>"] = { "<cmd>lua vim.lsp.buf.signature_help()<cr>", "Signature" },
 	["<C-p>"] = { "<cmd>lua require'telescope.builtin'.find_files()<cr>", "Find files" },
 	["<C-f>"] = { "<cmd>lua require('telescope.builtin').live_grep()<cr>", "Live grep" },
-	["<C-e>"] = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Open harpoon menu" },
+	["<C-e>"] = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<cr>", "Open harpoon menu" },
 	["<C-t>"] = { "<cmd>NvimTreeToggle<cr>", "Toogle Tree" },
+	["<C-n>"] = { "<cmd>NvimTreeFindFile<cr>", "Find in Tree" },
 	["<C-q>"] = { "<cmd> lua require('config.functions').toggle_qf()<cr>", "Toggle qf list" },
 }, { mode = "n", default_options })
