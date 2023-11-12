@@ -1,0 +1,24 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- clean: ["~"]
+
+- link:
+    ~/.bash_profile: bash_profile
+    ~/.bashrc: bashrc
+    ~/.bash_logout: bash_logout
+    ~/.config/rofi: rofi
+    ~/.config/nvim: nvim
+    ~/.config/kitty: kitty
+    ~/.config/ladspa_dsp: ladspa_dsp
+    ~/.config/waybar: waybar
+    ~/.config/sway: sway
+    ~/.config/swaylock: swaylock
+    ~/.config/wlogout: wlogout
+    ~/.config/flameshot/flameshot.sh: flameshot/flameshot.sh
+    ~/.config/tmux: tmux
+    ~/.config/pulse/default.pa: pulse/default.pa
+    ~/.zshrc: zshrc

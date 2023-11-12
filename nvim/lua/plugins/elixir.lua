@@ -1,0 +1,39 @@
+return{
+}
+-- return {
+-- 	"elixir-tools/elixir-tools.nvim",
+-- 	event = { "BufReadPre", "BufNewFile" },
+-- 	config = function()
+-- 		local elixir = require("elixir")
+-- 		local elixirls = require("elixir.elixirls")
+-- 		local home = os.getenv("HOME")
+--
+-- 		elixir.setup({
+-- 			credo = {
+-- 				-- port = 9000, -- connect via TCP with the given port. mutually exclusive with `cmd`
+-- 				cmd = "credo-language-server", -- path to the executable. mutually exclusive with `port`
+-- 				on_attach = function(client, bufnr)
+-- 					-- custom keybinds
+-- 				end,
+-- 			},
+-- 			elixirls = {
+-- 				cmd = home .. "/.local/share/nvim/mason/packages/elixir-ls/language_server.sh",
+-- 				-- default settings, use the `settings` function to override settings
+-- 				settings = elixirls.settings({
+-- 					dialyzerEnabled = true,
+-- 					fetchDeps = false,
+-- 					enableTestLenses = true,
+-- 					suggestSpecs = false,
+-- 				}),
+-- 				on_attach = function(client, bufnr)
+-- 					vim.keymap.set("n", "<space>fp", ":ElixirFromPipe<cr>", { buffer = true, noremap = true })
+-- 					vim.keymap.set("n", "<space>tp", ":ElixirToPipe<cr>", { buffer = true, noremap = true })
+-- 					vim.keymap.set("v", "<space>em", ":ElixirExpandMacro<cr>", { buffer = true, noremap = true })
+-- 				end,
+-- 			},
+-- 		})
+-- 	end,
+-- 	dependencies = {
+-- 		"nvim-lua/plenary.nvim",
+-- 	},
+-- }
