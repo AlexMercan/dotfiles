@@ -65,8 +65,8 @@ zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-export NVM_LAZY_LOAD=true
-export NVM_COMPLETION=true
+# export NVM_LAZY_LOAD=true
+# export NVM_COMPLETION=true
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -75,7 +75,6 @@ export NVM_COMPLETION=true
 # Add wisely, as too many plugins slow down shell startup.
 #
 plugins=(
-    zsh-nvm
     npm
     docker
     docker-compose
@@ -105,10 +104,7 @@ fi
 unsetopt BEEP
 
 export PATH="$PATH:$HOME/.local/bin"
-# export GOROOT=/usr/local/go
-# export GOPATH=$HOME/go
-# export PATH="$PATH:$GOROOT/bin"
-# export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:$HOME/go/bin"
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:$HOME/.local/share/applications"
@@ -131,9 +127,6 @@ alias tma='tmux attach -t $(tmux ls | fzf | cut -d: -f1) >> /dev/null'
 alias tstart='tmuxinator start $(tmuxinator list | tail -n+2 | tr " " "\n" | grep -Ev "^[ ]*$" | fzf)'
 alias mux=tmuxinator
 
-# nvm
-#export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -146,7 +139,8 @@ alias mux=tmuxinator
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="${HOME}/.config/lsp/lua-language-server/bin:${PATH}"

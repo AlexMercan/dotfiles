@@ -6,7 +6,8 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod1
-set $wallpapers-dir ~/Pictures/Wallpapers/
+
+include ~/.config/sway/outputs
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
@@ -31,7 +32,7 @@ font xft:URWGothic-Book 11
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+t exec kitty
+bindsym $mod+return exec kitty
 
 # kill focused window
 bindsym $mod+q kill
@@ -199,24 +200,15 @@ mode "resize" {
 # Lock screen
 bindsym $mod+9 exec ~/.config/swaylock/lock.sh 2
 
-# #Polybar
-exec_always ~/.config/waybar/waybar.sh
-# exec_always setwallpaper ~/Pictures/Wallpapers/the_scourge_of_the_plains.jpg
-exec_always setwallpaper ~/Pictures/Wallpapers/sway.jpg
-exec_always --no-startup-id ~/.config/flameshot/flameshot.sh
+# Waybar
 
-#exec --no-startup-id manjaro-hello
+exec_always ~/.config/waybar/waybar.sh
+exec ~/.azotebg
+
+# exec_always --no-startup-id ~/.config/flameshot/flameshot.sh
+bindsym $mod+Shift+f exec --no-startup-id flameshot gui
+
 exec --no-startup-id nm-applet
-# exec --no-startup-id xfce4-power-manager
-#exec --no-startup-id clipit
-# exec --no-startup-id blueberry-tray
-#exec --no-startup-id blueman-applet
-# exec_always --no-startup-id sbxkb
-#exec --no-startup-id start_conky_maia
-# exec --no-startup-id start_conky_green
-# exec --no-startup-id xautolock -time 30 -locker blurlock
-# exec_always --no-startup-id ff-theme-util
-# exec_always --no-startup-id fix_xcursor
 
 # hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
@@ -307,4 +299,7 @@ input "type:pointer" {
     scroll_method on_button_down
 }
 
-for_window [app_id="flameshot"] floating enable, fullscreen disable, move absolute position 0 0, border pixel 0
+for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
+# for_window [app_id="flameshot"] fullscreen enable global
+for_window [app_id="nwg*"] floating enable, fullscreen disable
+

@@ -11,8 +11,6 @@ return {
                 nls.builtins.formatting.shellharden,
                 nls.builtins.diagnostics.eslint,
                 nls.builtins.diagnostics.golangci_lint,
-                nls.builtins.diagnostics.buf,
-                nls.builtins.formatting.buf,
                 nls.builtins.formatting.prettier.with({
                     extra_args = { "--single-quote", "false" },
                 }),

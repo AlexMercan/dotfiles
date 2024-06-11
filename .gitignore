@@ -3,3 +3,4 @@ packer_compiled.lua
 lazy-lock.json
 tmux/plugins
 sway/outputs
+sway/workspaces
