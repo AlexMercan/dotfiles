@@ -43,20 +43,20 @@ return {
 				},
 			},
 			yamlls = {
-                settings = {
-                    yaml = {
-                      schemas = {
-                        kubernetes = "k8s-*.yaml",
-                        ["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
-                        ["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
-                        ["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
-                        ["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
-                        ["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
-                        ["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
-                        ["http://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
-                      },
-                    },
-                  },
+				settings = {
+					yaml = {
+						schemas = {
+							kubernetes = "k8s-*.yaml",
+							["http://json.schemastore.org/github-workflow"] = ".github/workflows/*",
+							["http://json.schemastore.org/github-action"] = ".github/action.{yml,yaml}",
+							["http://json.schemastore.org/ansible-stable-2.9"] = "roles/tasks/**/*.{yml,yaml}",
+							["http://json.schemastore.org/prettierrc"] = ".prettierrc.{yml,yaml}",
+							["http://json.schemastore.org/kustomization"] = "kustomization.{yml,yaml}",
+							["http://json.schemastore.org/chart"] = "Chart.{yml,yaml}",
+							["http://json.schemastore.org/circleciconfig"] = ".circleci/**/*.{yml,yaml}",
+						},
+					},
+				},
 			},
 			bashls = {},
 			jsonls = {},
@@ -65,7 +65,7 @@ return {
 			dockerls = {},
 			solidity = {},
 			angularls = {},
-			bufls = {},
+			buf_ls = {},
 			jdtls = {},
 		},
 		-- Global capabilities
@@ -74,8 +74,12 @@ return {
 	},
 	config = function(_, opts)
 		vim.keymap.set("n", "<space>e", vim.diagnostic.open_float)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
+		vim.keymap.set("n", "[d", function()
+			vim.diagnostic.jump({ count = -1, float = true })
+		end)
+		vim.keymap.set("n", "]d", function()
+			vim.diagnostic.jump({ count = 1, float = true })
+		end)
 		vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist)
 
 		local servers = opts.servers

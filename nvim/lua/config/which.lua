@@ -81,8 +81,6 @@ wk.register({
         name = "leader",
         rn = { "<cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
         ca = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code actions" },
-        cd = { "<cmd>Copilot disable<CR>", "Disable copilot" },
-        ce = { "<cmd>Copilot enable<CR>", "Enable copilot" },
         e = { "<cmd>lua vim.diagnostic.open_float()<CR>", "Open float" },
         q = { "<cmd>lua vim.diagnostic.setloclist()<CR>", "Set loclist" },
         f = { "<cmd>lua vim.lsp.buf.format{async=true}<CR>", "Format doc" },
