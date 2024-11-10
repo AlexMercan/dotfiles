@@ -122,7 +122,7 @@ set $ws7 7
 set $ws8 8
 
 # autostart
-for_window [class=".*tidal.*"] move to workspace 7
+for_window [class=".*tidal.*"] move to workspace 1
 exec --no-startup-id tidal-hifi
 
 # switch to workspace
@@ -204,6 +204,7 @@ bindsym $mod+9 exec ~/.config/swaylock/lock.sh 2
 
 exec_always ~/.config/waybar/waybar.sh
 exec ~/.azotebg
+exec --no-startup-id corectrl --minimize-systray
 
 # exec_always --no-startup-id ~/.config/flameshot/flameshot.sh
 bindsym $mod+Shift+f exec --no-startup-id flameshot gui

@@ -108,6 +108,7 @@ export PATH="$PATH:$HOME/go/bin"
 export PATH=$PATH:/usr/local/go/bin
 export PATH="$PATH:/snap/bin"
 export PATH="$PATH:$HOME/.local/share/applications"
+export PATH="$PATH:$HOME/.local/share/gem/ruby/3.0.0/bin"
 export JDTLS_HOME="$HOME/.local/opt/jdtls-launcher/jdtls/config_linux"
 export JDTLS_CONFIG="$HOME/.local/opt/jdtls-launcher/jdtls/config_linux"
 export JDTLS_JVM_ARGS="-javaagent:$HOME/.local/opt/jdtls-launcher/jdtls/plugins/lombok.jar"
@@ -125,6 +126,7 @@ alias install='sudo apt install'
 alias gs="git status"
 alias tma='tmux attach -t $(tmux ls | fzf | cut -d: -f1) >> /dev/null'
 alias tstart='tmuxinator start $(tmuxinator list | tail -n+2 | tr " " "\n" | grep -Ev "^[ ]*$" | fzf)'
+alias k='kubectl'
 alias mux=tmuxinator
 
 

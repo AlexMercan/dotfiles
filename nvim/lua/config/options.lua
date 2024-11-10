@@ -25,6 +25,8 @@ local options = {
     splitright = true,
     splitbelow = true,
     laststatus = 3,
+    conceallevel = 2,
+    fileformat = "unix",
 }
 
 vim.opt.clipboard:append "unnamedplus"

@@ -22,3 +22,4 @@
     ~/.config/tmux: tmux
     ~/.config/pulse/default.pa: pulse/default.pa
     ~/.zshrc: zshrc
+    ~/allow_user_to_run_gui_as_root.sh: allow_user_to_run_gui_as_root.sh
