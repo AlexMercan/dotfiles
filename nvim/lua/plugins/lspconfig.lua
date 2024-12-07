@@ -67,6 +67,7 @@ return {
 			angularls = {},
 			buf_ls = {},
 			jdtls = {},
+            zls = {}
 		},
 		-- Global capabilities
 		capabilities = {},

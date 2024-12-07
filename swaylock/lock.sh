@@ -10,7 +10,7 @@ fi
 GRACE=$1
 
 swaylock \
-	--screenshots \
+	--screenshot \
 	--clock \
     --timestr="%H:%M:%S" \
     --datestr="%A, %d/%m/%Y" \
