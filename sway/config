@@ -122,8 +122,8 @@ set $ws7 7
 set $ws8 8
 
 # autostart
-for_window [class=".*tidal.*"] move to workspace 1
-exec --no-startup-id tidal-hifi
+for_window [class=".*Spotify.*"] move to workspace 1
+exec --no-startup-id spotify
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1

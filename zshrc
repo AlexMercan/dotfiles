@@ -116,7 +116,6 @@ export GRADLE_HOME=/usr/share/java/gradle
 export TERMINAL=/usr/bin/kitty
 export BROWSER='google-chrome'
 
-
 alias nvconf='cd ~/.dotfiles/nvim && nvim .'
 alias dot='cd ~/.dotfiles && nvim .'
 alias vim='nvim'
